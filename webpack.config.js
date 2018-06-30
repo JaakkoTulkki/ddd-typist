@@ -1,8 +1,10 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
 
 module.exports = {
-    entry: "./src/index.tsx",
+    entry: ["./src/index.tsx", "./src/scss/main.scss"],
     output: {
         path: path.resolve(__dirname, 'public'),
         filename: 'bundle.js',
@@ -16,7 +18,8 @@ module.exports = {
         publicPath: '/',
     },
     plugins: [
-        new HtmlWebpackPlugin({template: 'public/index.html'})
+      new HtmlWebpackPlugin({template: 'public/index.html'}),
+      new ExtractTextPlugin('style.css')
     ],
 
     resolve: {
@@ -30,7 +33,14 @@ module.exports = {
             { test: /\.tsx?$/, loader: "awesome-typescript-loader" },
 
             // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
-            { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
+            { enforce: "pre", test: /\.js$/, loader: "source-map-loader" },
+            {
+              test: /\.scss$/,
+              use: ExtractTextPlugin.extract({
+                fallback: 'style-loader',
+                use: ['css-loader', 'sass-loader']
+              })
+            }
         ]
-    }
+    },
 };
