@@ -1,28 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-const Yo = () =>
-    <div className="container">
-        <div className="row">
-            <div className="col-sm">
-                One of three columns
-            </div>
-            <div className="col-sm">
-                One of three columns
-            </div>
-            <div className="col-sm">
-                One of three columns
-            </div>
-        </div>
+import * as styles from './scss/main.scss'
 
-        <div className="row">
-            <div className="col-sm">
+const Yo = () =>
+    <div className={styles.container}>
+        <div className={styles.row}>
+            <div className={styles.colSm}>
                 One of three columns
             </div>
-            <div className="col-sm">
+            <div className={styles.colSm}>
                 One of three columns
             </div>
-            <div className="col-sm">
+            <div className={styles.colSm}>
                 One of three columns
             </div>
         </div>

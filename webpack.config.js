@@ -38,7 +38,8 @@ module.exports = {
               test: /\.scss$/,
               use: ExtractTextPlugin.extract({
                 fallback: 'style-loader',
-                use: ['css-loader', 'sass-loader']
+                use: ['typings-for-css-modules-loader?modules&namedExport&camelCase', 'sass-loader']
+                // use: ['css-loader', 'sass-loader'] namedExport&camelCase
               })
             }
         ]
