@@ -2,23 +2,14 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import * as styles from './scss/main.scss'
+import {Home} from "./react-app/screens/home/home";
 
-const Yo = () =>
+const App = () =>
     <div className={styles.container}>
-        <div className={styles.row}>
-            <div className={styles.colSm}>
-                One of three columns
-            </div>
-            <div className={styles.colSm}>
-                One of three columns
-            </div>
-            <div className={styles.colSm}>
-                One of three columns
-            </div>
-        </div>
+        <Home />
     </div>;
 
 ReactDOM.render(
-    <Yo />,
+    <App />,
     document.getElementById("root")
 );
