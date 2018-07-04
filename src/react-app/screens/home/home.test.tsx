@@ -1,11 +1,23 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import {ShallowWrapper, shallow} from 'enzyme';
 import {Home} from "./home";
-import { TextToType } from "./components/TextToType/TextToType";
+import {TextToType, TextToTypeProps} from "./components/TextToType/TextToType";
+import {WritingAreaContainer} from "./components/WritingArea/WritingArea.container";
 
 describe('Home', () => {
-    it('should render TextToType', () => {
-        const home = mount(<Home />);
+    let home: ShallowWrapper;
+    beforeEach(() => {
+        home = shallow(<Home textToWrite='chicken' />);
+    });
+
+    it('should render TextToType with correct props', () => {
         expect(home.find(TextToType).length).toEqual(1);
+        const actualProps = home.find(TextToType).props();
+        const expectedProps: TextToTypeProps = {text: 'chicken'};
+        expect(actualProps).toEqual(expectedProps);
+    });
+
+    it('should render WritingArea', () => {
+        expect(home.find(WritingAreaContainer).length).toEqual(1);
     });
 });

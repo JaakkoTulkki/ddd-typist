@@ -6,7 +6,7 @@ import {Home} from "./react-app/screens/home/home";
 
 const App = () =>
     <div className={styles.container}>
-        <Home />
+        <Home textToWrite='hello world' />
     </div>;
 
 ReactDOM.render(

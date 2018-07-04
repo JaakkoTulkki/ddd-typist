@@ -1,27 +1,16 @@
 import React from 'react';
-import {MapStateProps, OwnProps, TextToType} from "./components/TextToType/TextToType";
-import {createStore, combineReducers} from 'redux';
-import { Provider, connect } from 'react-redux';
+import {TextToType} from "./components/TextToType/TextToType";
+import {WritingAreaContainer} from "./components/WritingArea/WritingArea.container";
 
-interface AppState {
-    hello: string;
+interface HomeProps {
+    textToWrite: string;
 }
 
-function hello(): string {
-    return 'hello world';
+export class Home extends React.Component<HomeProps, any> {
+    render() {
+        return <div>
+            <TextToType text={this.props.textToWrite} />
+            <WritingAreaContainer />
+        </div>;
+    }
 }
-
-const store = createStore(combineReducers({hello}));
-
-function mapStateToProps (state: AppState): MapStateProps {
-    return {helloThere: state.hello}
-}
-
-
-const Connected =
-    connect<MapStateProps, {}, OwnProps>(mapStateToProps)(TextToType);
-
-export const Home = () =>
-    <Provider store={store}>
-        <Connected text='hello' />
-    </Provider>;
