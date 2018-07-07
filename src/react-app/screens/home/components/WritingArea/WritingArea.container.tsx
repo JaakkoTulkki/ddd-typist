@@ -3,6 +3,7 @@ import {WritingAreaPresenter} from "./WritingArea.presenter";
 
 interface WritingAreaContainerState {
     typedText: string;
+    onKeyPress?: (event: KeyboardEvent) => void
 }
 
 export class WritingAreaContainer extends React.Component<any, WritingAreaContainerState> {
@@ -11,23 +12,29 @@ export class WritingAreaContainer extends React.Component<any, WritingAreaContai
         this.state = {
             typedText: '',
         };
-        this.onKeyPress = this.onKeyPress.bind(this);
+        this.onKeyPress = this.props.onKeyPress || this.onKeyPress.bind(this);
     }
 
     onKeyPress(event: KeyboardEvent) {
+        let typedText: string;
         this.setState((state: WritingAreaContainerState) => {
+            if(event.key === 'Backspace') {
+                typedText = state.typedText.slice(0, -1);
+            } else {
+                typedText = state.typedText + event.key;
+            }
             return {
-                typedText: state.typedText + event.key,
+                typedText,
             }
         });
     }
 
     componentDidMount() {
-        document.addEventListener('keypress', this.onKeyPress, true)
+        document.addEventListener('keydown', this.onKeyPress, false)
     }
 
     componentWillUnmount() {
-        document.removeEventListener('keypress', this.onKeyPress, true);
+        document.removeEventListener('keydown', this.onKeyPress, false);
     }
 
     render() {
