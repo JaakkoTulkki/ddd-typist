@@ -10,7 +10,7 @@ export class Home extends React.Component<HomeProps, any> {
     render() {
         return <div>
             <TextToType text={this.props.textToWrite} />
-            <WritingAreaContainer />
+            <WritingAreaContainer textToWrite={this.props.textToWrite}/>
         </div>;
     }
 }

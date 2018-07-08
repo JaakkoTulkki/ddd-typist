@@ -1,30 +1,34 @@
 import React from 'react';
 import {WritingAreaPresenter} from "./WritingArea.presenter";
 
-interface WritingAreaContainerState {
-    typedText: string;
+interface WritingAreaContainerProps {
+    textToWrite: string;
     onKeyPress?: (event: KeyboardEvent) => void
 }
 
-export class WritingAreaContainer extends React.Component<any, WritingAreaContainerState> {
+interface WritingAreaContainerState {
+    newKey: string;
+}
+
+export class WritingAreaContainer extends React.Component<WritingAreaContainerProps, WritingAreaContainerState> {
     constructor(props: any) {
         super(props);
         this.state = {
-            typedText: '',
+            newKey: '',
         };
         this.onKeyPress = this.props.onKeyPress || this.onKeyPress.bind(this);
     }
 
     onKeyPress(event: KeyboardEvent) {
-        let typedText: string;
         this.setState((state: WritingAreaContainerState) => {
+            let newKey = '';
             if(event.key === 'Backspace') {
-                typedText = state.typedText.slice(0, -1);
-            } else {
-                typedText = state.typedText + event.key;
+                newKey = 'delete';
+            } else if (event.key.length === 1) {
+                newKey = event.key;
             }
             return {
-                typedText,
+                newKey,
             }
         });
     }
@@ -39,7 +43,7 @@ export class WritingAreaContainer extends React.Component<any, WritingAreaContai
 
     render() {
         return <div>
-            <WritingAreaPresenter typedText={this.state.typedText} />
+            <WritingAreaPresenter newKey={this.state.newKey} textToWrite={this.props.textToWrite} />
         </div>;
     }
 }

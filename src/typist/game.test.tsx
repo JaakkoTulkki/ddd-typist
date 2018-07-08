@@ -75,6 +75,9 @@ describe('Game', () => {
             ]);
             expect(results.keysPerMinute()).toEqual(240);
 
+            const expectedText = `You typed 80 % right. You typed 240 keys per minute`;
+            expect(results.toString()).toEqual(expectedText);
+
             done();
         }, 1001);
     });

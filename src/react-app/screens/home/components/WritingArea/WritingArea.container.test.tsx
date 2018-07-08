@@ -7,11 +7,12 @@ const globalAny:any = global;
 
 describe('WritingAreaContainer', () => {
     it('should pass pressed keys to container', () => {
-        const component: ShallowWrapper = shallow(<WritingAreaContainer />);
+        const component: ShallowWrapper = shallow(<WritingAreaContainer textToWrite='hello'/>);
         const expectedProps: WritingAreaProps = {
-            typedText: 'hello'
+            newKey: 'h',
+            textToWrite: 'hello'
         };
-        component.setState({typedText: 'hello'});
+        component.setState({ newKey: 'h', textToWrite: 'hello'});
         expect(component.find(WritingAreaPresenter).props()).toEqual(expectedProps);
     });
 
@@ -22,7 +23,8 @@ describe('WritingAreaContainer', () => {
         globalAny.document.removeEventListener = removeListener;
 
         const onKeyPress = jest.fn();
-        const component: ReactWrapper = mount(<WritingAreaContainer onKeyPress={onKeyPress}/>);
+        const component: ReactWrapper =
+            mount(<WritingAreaContainer textToWrite='hello' onKeyPress={onKeyPress} />);
 
         expect(addListener).toHaveBeenCalledWith('keydown', onKeyPress, false);
         component.unmount();

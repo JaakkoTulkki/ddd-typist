@@ -69,6 +69,13 @@ export class GameResults {
     public keysPerMinute(): number {
         return this.typedKeys.filter(key => key.correct).length / (this.seconds / 60)
     }
+
+    public toString(): string {
+        const correctRate = this.typedKeys.filter((key: TypedKey) => key.correct).length
+                / this.typedKeys.length * 100;
+
+        return `You typed ${correctRate} % right. You typed ${this.keysPerMinute()} keys per minute`;
+    }
 }
 
 export class Key {
