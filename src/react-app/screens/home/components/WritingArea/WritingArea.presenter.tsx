@@ -19,7 +19,7 @@ export class WritingAreaPresenter extends React.Component<WritingAreaProps, Writ
         this.state.game.addText(this.props.textToWrite);
     }
 
-    getWrittenSoFar(): string {
+    private getWrittenSoFar(): string {
         if(this.state.game.isFinished()) {
             return `Game is finished. ${this.state.game.getResults().toString()}`;
         }
@@ -40,6 +40,10 @@ export class WritingAreaPresenter extends React.Component<WritingAreaProps, Writ
     }
 
     render() {
-        return <div>{this.getWrittenSoFar()}</div>;
+        const charAt = this.state.game.getResults().keys().length;
+        return <div>
+            <span style={{color: 'black'}}>{this.getWrittenSoFar()}</span>
+            <span style={{color: 'gainsboro'}}>{this.props.textToWrite.slice(charAt)}</span>
+        </div>;
     }
 }
