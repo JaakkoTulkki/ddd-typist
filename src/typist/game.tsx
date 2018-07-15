@@ -50,6 +50,10 @@ export class Game {
         return this.timer.gameHasStarted() && this.currentPointer === this.textToType.length;
     }
 
+    gameHasStarted(): boolean {
+        return this.timer.gameHasStarted();
+    }
+
     private shouldEndGame() {
         return this.currentPointer === this.textToType.length;
     }

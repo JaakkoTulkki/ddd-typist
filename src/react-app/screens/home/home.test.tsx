@@ -10,13 +10,6 @@ describe('Home', () => {
         home = shallow(<Home textToWrite='chicken' />);
     });
 
-    it('should render TextToType with correct props', () => {
-        expect(home.find(TextToType).length).toEqual(1);
-        const actualProps = home.find(TextToType).props();
-        const expectedProps: TextToTypeProps = {text: 'chicken'};
-        expect(actualProps).toEqual(expectedProps);
-    });
-
     it('should render WritingArea', () => {
         expect(home.find(WritingAreaContainer).length).toEqual(1);
     });

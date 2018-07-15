@@ -5,7 +5,6 @@ import {WritingAreaPresenter} from "./WritingArea.presenter";
 describe('WritingArea', () => {
     it('should show text as new text written and deleted', () => {
         const component = mount(<WritingAreaPresenter textToWrite='hello world' newKey='' />);
-        expect(component.text()).toEqual('');
 
         component.setProps({newKey: 'H'});
         component.setProps({newKey: 'e'});
@@ -16,7 +15,7 @@ describe('WritingArea', () => {
         component.setProps({newKey: 'l'});
         component.setProps({newKey: 'o'});
 
-         expect(component.text()).toEqual('He llo');
+        expect(component.find('[data-test-id="written-so-far"]').text()).toEqual('He llo');
     });
 
     it('should show results once completed', () => {

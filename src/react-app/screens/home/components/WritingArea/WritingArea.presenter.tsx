@@ -1,5 +1,5 @@
 import React from 'react';
-import {Game, GameTimer, Key} from "../../../../../typist/game";
+import {Game, GameTimer, Key, TypedKey} from "../../../../../typist/game";
 
 export interface WritingAreaProps {
     newKey: string;
@@ -19,31 +19,54 @@ export class WritingAreaPresenter extends React.Component<WritingAreaProps, Writ
         this.state.game.addText(this.props.textToWrite);
     }
 
-    private getWrittenSoFar(): string {
-        if(this.state.game.isFinished()) {
-            return `Game is finished. ${this.state.game.getResults().toString()}`;
-        }
-        return this.state.game.getResults().keys().map((key: Key) => key.key).join('');
-    }
+    private sendKeys() {
+        if (this.props.newKey && !this.state.game.isFinished()) {
+            // No two spaces should follow each other
+            const writtenIndex = this.state.game.getResults().keys().length - 1;
+            let lastKey = '';
+            if(writtenIndex >= 0) lastKey = this.state.game.getResults().keys()[writtenIndex].key;
 
-    shouldComponentUpdate(nextProps: WritingAreaProps, nextState: WritingAreaPresenterState) {
-        if(!this.state.game.isFinished()) {
-            if(nextProps.newKey.length === 1) {
-                this.state.game.sendKey(new Key(nextProps.newKey));
+            if(this.props.newKey === ' ' && lastKey === ' ') {
+                return;
             }
 
-            if(nextProps.newKey === 'delete') {
+            if (this.props.newKey.length === 1) {
+                this.state.game.sendKey(new Key(this.props.newKey));
+            }
+
+            if (this.props.newKey === 'delete') {
                 this.state.game.delete();
             }
         }
-        return true;
     }
 
     render() {
+        this.sendKeys();
         const charAt = this.state.game.getResults().keys().length;
         return <div>
-            <span style={{color: 'black'}}>{this.getWrittenSoFar()}</span>
+            <span data-test-id="written-so-far" style={{color: 'black'}}><WrittenSoFar game={this.state.game}/></span>
             <span style={{color: 'gainsboro'}}>{this.props.textToWrite.slice(charAt)}</span>
         </div>;
     }
 }
+
+interface WrittenSoFarProps {
+    game: Game;
+}
+
+const WrittenSoFar: React.SFC<WrittenSoFarProps> = ({game}) => {
+    if(game.isFinished()) {
+        return <span>{`Game is finished. ${game.getResults().toString()}`}</span>;
+    }
+
+
+    return <span>
+        {game.getResults().keys().map((key: TypedKey, index) => {
+            const style = {
+                color: key.correct ? 'black' : 'red',
+            } as any;
+
+            return <span style={style} key={index}>{key.key}</span>
+        })}
+    </span>
+};
