@@ -1,6 +1,6 @@
 import {Game, Key, GameTimer, TypedKey, GameResults} from "./game";
 
-describe('Game', () => {
+describe('GameHistory', () => {
     let game: Game;
     beforeEach(() => {
         game = new Game(new GameTimer());
@@ -118,7 +118,7 @@ describe('Game', () => {
         addTextToGame('hello');
         addStrokesToGame('hello');
 
-        expect(() => addStrokesToGame('w')).toThrow('Game has ended.')
+        expect(() => addStrokesToGame('w')).toThrow('GameHistory has ended.')
     });
 
     it('should not delete if there is nothing to delete', () => {

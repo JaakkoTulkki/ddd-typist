@@ -11,7 +11,7 @@ export class Game {
             throw new Error('You do not have added text to type.');
         }
         if(!this.gameInPlay) {
-            throw new Error('Game has ended.');
+            throw new Error('GameHistory has ended.');
         }
 
         if(!this.timer.gameHasStarted()) {
