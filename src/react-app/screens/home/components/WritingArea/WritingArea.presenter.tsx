@@ -1,6 +1,7 @@
 import React from 'react';
 import {Game, GameTimer, Key, TypedKey} from "../../../../../typist/game";
 import {GameHistoryService, KeyStroke} from "../../../../../GameHistoryService/GameHistoryService";
+import {dropdownDivider} from "../../../../../scss/main.scss";
 
 export interface WritingAreaProps {
     newKey: string;
@@ -8,7 +9,7 @@ export interface WritingAreaProps {
 }
 
 interface WritingAreaPresenterState {
-    game: Game;
+    game: GameWithHistory;
 }
 
 class GameWithHistory extends Game{
@@ -21,12 +22,15 @@ class GameWithHistory extends Game{
         this.gameHistoryId = this.historyService.createGame();
     }
 
+    getHistoryStrokes() {
+        return this.historyService.findById(this.gameHistoryId).strokes;
+    }
+
     sendKey(key: Key) {
         super.sendKey(key);
 
         const keyStroke = this.createKeyStroke(key.key);
         this.historyService.saveKeyStroke(keyStroke);
-        console.log(this.historyService.findById(this.gameHistoryId).strokes);
     }
 
     private createKeyStroke(value: string) {
@@ -41,7 +45,6 @@ class GameWithHistory extends Game{
         super.delete();
         const keyStroke: KeyStroke = this.createKeyStroke('delete');
         this.historyService.saveKeyStroke(keyStroke);
-        console.log(this.historyService.findById(this.gameHistoryId).strokes);
     }
 }
 
@@ -78,6 +81,16 @@ export class WritingAreaPresenter extends React.Component<WritingAreaProps, Writ
     render() {
         this.sendKeys();
         const charAt = this.state.game.getResults().keys().length;
+        if(this.state.game.isFinished()) {
+            return <div>
+                <span>{`Game is finished. ${this.state.game.getResults().toString()}`}</span>
+                <div>Your game as it was:</div>
+                {this.state.game.getHistoryStrokes().map((stroke: KeyStroke) => {
+                    const value = stroke.value === ' ' ? 'space' : stroke.value;
+                    return <div>{value}</div>;
+                })}
+              </div>;
+        }
         return <div>
             <span data-test-id="written-so-far" style={{color: 'black'}}><WrittenSoFar game={this.state.game}/></span>
             <span style={{color: 'gainsboro'}}>{this.props.textToWrite.slice(charAt)}</span>
@@ -90,11 +103,6 @@ interface WrittenSoFarProps {
 }
 
 const WrittenSoFar: React.SFC<WrittenSoFarProps> = ({game}) => {
-    if(game.isFinished()) {
-        return <span>{`Game is finished. ${game.getResults().toString()}`}</span>;
-    }
-
-
     return <span>
         {game.getResults().keys().map((key: TypedKey, index) => {
             const style = {

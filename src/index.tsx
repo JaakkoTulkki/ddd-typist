@@ -8,7 +8,7 @@ const text = 'It has been reported that doctors assessed the boys inside the cav
 
 const App = () =>
     <div className={styles.container}>
-        <Home textToWrite={text} />
+        <Home textToWrite={'hello world'} />
     </div>;
 
 ReactDOM.render(
