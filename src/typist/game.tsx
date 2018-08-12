@@ -4,7 +4,7 @@ export class Game {
     private currentPointer: number = 0;
     private gameInPlay: boolean = true;
 
-    constructor(private timer: GameTimer){ }
+    constructor(protected timer: GameTimer){ }
 
     public sendKey(key: Key): void {
         if(!this.textToType) {

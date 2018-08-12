@@ -11,11 +11,6 @@ export class GameHistory {
     constructor(public id: string) {}
 
     get strokes(): PressedKey[] {
-        return this._strokes;
-    }
-
-    public addStroke(time: number, value: string) {
-        this._strokes.push({time, value} as PressedKey)
         this._strokes.sort((a, b) => {
             if(a.time < b.time) {
                 return -1;
@@ -25,6 +20,11 @@ export class GameHistory {
             }
             return 1;
         });
+        return this._strokes;
+    }
+
+    public addStroke(time: number, value: string) {
+        this._strokes.push({time, value} as PressedKey)
     }
 }
 

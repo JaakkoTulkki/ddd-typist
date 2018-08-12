@@ -24,7 +24,7 @@ describe('GameHistoryService', () => {
         expect(gameHistory.id).toEqual(gameHistoryId);
     });
 
-    it('should save keystrokes to GameHistory and return them in order', () => {
+    it('should save keystrokes to GameHistory and return them', () => {
         const gameHistoryId = createGameHistory();
         const firstKeyStroke = {
             time: 0.0001,

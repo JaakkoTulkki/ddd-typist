@@ -1,5 +1,6 @@
 import React from 'react';
 import {Game, GameTimer, Key, TypedKey} from "../../../../../typist/game";
+import {GameHistoryService, KeyStroke} from "../../../../../GameHistoryService/GameHistoryService";
 
 export interface WritingAreaProps {
     newKey: string;
@@ -10,11 +11,45 @@ interface WritingAreaPresenterState {
     game: Game;
 }
 
+class GameWithHistory extends Game{
+    private historyService: GameHistoryService;
+    private gameHistoryId: string;
+
+    constructor(gameTimer: GameTimer) {
+        super(gameTimer);
+        this.historyService = new GameHistoryService();
+        this.gameHistoryId = this.historyService.createGame();
+    }
+
+    sendKey(key: Key) {
+        super.sendKey(key);
+
+        const keyStroke = this.createKeyStroke(key.key);
+        this.historyService.saveKeyStroke(keyStroke);
+        console.log(this.historyService.findById(this.gameHistoryId).strokes);
+    }
+
+    private createKeyStroke(value: string) {
+        return {
+            time: this.timer.getTime(),
+            value,
+            gameId: this.gameHistoryId,
+        } as KeyStroke;
+    }
+
+    delete() {
+        super.delete();
+        const keyStroke: KeyStroke = this.createKeyStroke('delete');
+        this.historyService.saveKeyStroke(keyStroke);
+        console.log(this.historyService.findById(this.gameHistoryId).strokes);
+    }
+}
+
 export class WritingAreaPresenter extends React.Component<WritingAreaProps, WritingAreaPresenterState> {
     constructor(props: WritingAreaProps) {
         super(props);
         this.state = {
-            game: new Game(new GameTimer()),
+            game: new GameWithHistory(new GameTimer()),
         };
         this.state.game.addText(this.props.textToWrite);
     }
