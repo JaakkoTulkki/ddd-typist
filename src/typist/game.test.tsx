@@ -52,10 +52,10 @@ describe('GameHistory', () => {
 
         setTimeout(() => {
             const keysPerMinute: number = game.getResults().keysPerMinute();
-            expect(keysPerMinute).toEqual(240);
+            expect(keysPerMinute).toEqual(2400);
 
             done();
-        }, 1001);
+        }, 101);
     });
 
     it('should tell how many how many correct and incorrect characters have been typed', (done) => {
@@ -73,13 +73,13 @@ describe('GameHistory', () => {
                 new TypedKey('i', false),
                 new TypedKey('o', true),
             ]);
-            expect(results.keysPerMinute()).toEqual(240);
+            expect(results.keysPerMinute()).toEqual(2400);
 
-            const expectedText = `You typed 80 % right. You typed 240 keys per minute`;
+            const expectedText = `You typed 80 % right. You typed 2400 keys per minute`;
             expect(results.toString()).toEqual(expectedText);
 
             done();
-        }, 1001);
+        }, 101);
     });
 
     it('should end the game once everything has been typed correctly', () => {
@@ -104,13 +104,13 @@ describe('GameHistory', () => {
 
         setTimeout(() => {
             addStrokesToGame('ello');
-        }, 1001);
+        }, 101);
 
         setTimeout(() => {
             expect(game.isFinished()).toBeTruthy();
-            expect(game.getResults().seconds).toEqual(1);
+            expect(game.getResults().seconds).toEqual(0.1);
             done();
-        }, 2001);
+        }, 201);
 
     });
 

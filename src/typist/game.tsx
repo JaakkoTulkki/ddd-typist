@@ -43,7 +43,7 @@ export class Game {
     }
 
     getResults(): GameResults {
-        return new GameResults(this.keys, this.timer.getTime());
+        return new GameResults(this.keys, this.timer.getTime() / 1000);
     }
 
     isFinished(): boolean {
@@ -87,19 +87,19 @@ export class Key {
 }
 
 export class GameTimer {
-    public seconds: number = 0;
+    public milliseconds: number = 0;
     private interValId: any;
 
     private tickSeconds() {
-        this.seconds += 1;
+        this.milliseconds += 100;
     }
 
     public start(): void {
-        this.interValId = setInterval(this.tickSeconds.bind(this), 1000);
+        this.interValId = setInterval(this.tickSeconds.bind(this), 100);
     }
 
     public getTime() {
-        return this.seconds;
+        return this.milliseconds;
     }
 
     public gameHasStarted() {
