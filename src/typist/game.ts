@@ -43,6 +43,8 @@ export class Game {
     }
 
     getResults(): GameResults {
+        // throw new Error(this.timer.getTime());
+
         return new GameResults(this.keys, this.timer.getTime() / 1000);
     }
 
@@ -71,7 +73,7 @@ export class GameResults {
     }
 
     public keysPerMinute(): number {
-        return this.typedKeys.filter(key => key.correct).length / (this.seconds / 60)
+        return Math.floor(this.typedKeys.filter(key => key.correct).length / (this.seconds / 60))
     }
 
     public toString(): string {
@@ -95,11 +97,11 @@ export class GameTimer {
     private interValId: any;
 
     private tickSeconds() {
-        this.milliseconds += 5;
+        this.milliseconds += 10;
     }
 
     public start(): void {
-        this.interValId = setInterval(this.tickSeconds.bind(this), 5);
+        this.interValId = setInterval(this.tickSeconds.bind(this), 10);
     }
 
     public getTime() {

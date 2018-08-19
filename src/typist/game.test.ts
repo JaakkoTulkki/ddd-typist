@@ -44,42 +44,39 @@ describe('GameHistory', () => {
         expect(playedStrokes).toEqual([new TypedKey('b', false)]);
     });
 
-    it('should tell how many keystrokes per minute player is hitting', (done) => {
+    it('should tell how many keystrokes per minute player is hitting', () => {
         addTextToGame('chicken');
         addStrokesToGame('chii');
         game.delete();
         addStrokesToGame('c');
-
-        setTimeout(() => {
-            const keysPerMinute: number = game.getResults().keysPerMinute();
-            expect(keysPerMinute).toEqual(2400);
-
-            done();
-        }, 101);
+        // @ts-ignore
+        game.timer.stop();
+        // @ts-ignore
+        game.timer.milliseconds = 1005;
+        const keysPerMinute: number = game.getResults().keysPerMinute();
+        expect(keysPerMinute).toEqual(238);
     });
 
-    it('should tell how many how many correct and incorrect characters have been typed', (done) => {
+    it('should tell how many how many correct and incorrect characters have been typed', () => {
         addTextToGame('hello');
-        addStrokesToGame('heli');
-
-        setTimeout(() => {
-            game.sendKey(new Key('o'));
-            const results: GameResults = game.getResults();
-
-            expect(results.keys()).toEqual([
+        addStrokesToGame('helio');
+        // @ts-ignore
+        game.timer.stop();
+        // @ts-ignore
+        game.timer.milliseconds = 100;
+        const results: GameResults = game.getResults();
+        expect(results.keys()).toEqual([
                 new TypedKey('h', true),
                 new TypedKey('e', true),
                 new TypedKey('l', true),
                 new TypedKey('i', false),
                 new TypedKey('o', true),
             ]);
-            expect(results.keysPerMinute()).toEqual(2400);
 
-            const expectedText = `You typed 80 % right. You typed 2400 keys per minute`;
-            expect(results.toString()).toEqual(expectedText);
+        expect(results.keysPerMinute()).toEqual(2400);
 
-            done();
-        }, 101);
+        const expectedText = `You typed 80 % right. You typed 2400 keys per minute`;
+        expect(results.toString()).toEqual(expectedText);
     });
 
     it('should end the game once everything has been typed correctly', () => {
@@ -98,20 +95,11 @@ describe('GameHistory', () => {
         expect(game.isFinished()).toEqual(false);
     });
 
-    it('should stop the timer once the game has stopped', (done) => {
+    it('should stop the timer once the game has stopped', () => {
         addTextToGame('hello');
         addStrokesToGame('h');
-
-        setTimeout(() => {
-            addStrokesToGame('ello');
-        }, 101);
-
-        setTimeout(() => {
-            expect(game.isFinished()).toBeTruthy();
-            expect(game.getResults().seconds).toEqual(0.1);
-            done();
-        }, 201);
-
+        addStrokesToGame('ello');
+        expect(game.isFinished()).toBeTruthy();
     });
 
     it('should throw an error if trying to keep playing once game ended', () => {
