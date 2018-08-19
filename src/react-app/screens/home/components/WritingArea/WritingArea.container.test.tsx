@@ -1,7 +1,8 @@
 import React from 'react';
 import {mount, ReactWrapper, shallow, ShallowWrapper} from "enzyme";
-import {WritingAreaPresenter, WritingAreaProps} from "./WritingArea.presenter";
+import {WritingAreaPresenter} from "./WritingArea.presenter";
 import {WritingAreaContainer} from "./WritingArea.container";
+import {WritingAreaProps} from "../GameWithHistory/GameWithHistory";
 const globalAny:any = global;
 
 

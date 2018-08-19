@@ -1,7 +1,7 @@
 import uuidv1 from 'uuid/v1';
 import {HistoryRepo} from "./GameHistoryRepository";
 
-interface PressedKey {
+export interface PressedKey {
     time: number;
     value: string;
 }

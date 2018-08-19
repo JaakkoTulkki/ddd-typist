@@ -1,7 +1,6 @@
 import React from 'react';
 import {ShallowWrapper, shallow} from 'enzyme';
 import {Home} from "./home";
-import {TextToType, TextToTypeProps} from "./components/TextToType/TextToType";
 import {WritingAreaContainer} from "./components/WritingArea/WritingArea.container";
 
 describe('Home', () => {

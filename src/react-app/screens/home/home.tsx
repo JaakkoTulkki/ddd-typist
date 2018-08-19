@@ -1,5 +1,4 @@
 import React from 'react';
-import {TextToType} from "./components/TextToType/TextToType";
 import {WritingAreaContainer} from "./components/WritingArea/WritingArea.container";
 
 interface HomeProps {

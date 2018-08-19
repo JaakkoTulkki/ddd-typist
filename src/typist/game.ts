@@ -84,6 +84,10 @@ export class GameResults {
 
 export class Key {
     constructor(public key: string) {}
+
+    isDelete(): boolean {
+        return this.key === 'delete';
+    }
 }
 
 export class GameTimer {
@@ -91,11 +95,11 @@ export class GameTimer {
     private interValId: any;
 
     private tickSeconds() {
-        this.milliseconds += 100;
+        this.milliseconds += 5;
     }
 
     public start(): void {
-        this.interValId = setInterval(this.tickSeconds.bind(this), 100);
+        this.interValId = setInterval(this.tickSeconds.bind(this), 5);
     }
 
     public getTime() {

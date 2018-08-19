@@ -39,7 +39,7 @@ describe('GameHistory', () => {
         game.delete();
         game.delete();
 
-        const playedStrokes: Key[] = game.getResults().keys();
+        const playedStrokes: TypedKey[] = game.getResults().keys();
 
         expect(playedStrokes).toEqual([new TypedKey('b', false)]);
     });
