@@ -106,7 +106,7 @@ describe('Game', () => {
         addTextToGame('hello');
         addStrokesToGame('hello');
 
-        expect(() => addStrokesToGame('w')).toThrow('GameHistory has ended.')
+        expect(() => addStrokesToGame('w')).toThrow('Game has ended.')
     });
 
     it('should not delete if there is nothing to delete', () => {

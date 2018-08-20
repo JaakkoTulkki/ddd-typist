@@ -11,7 +11,7 @@ export class Game {
             throw new Error('You do not have added text to type.');
         }
         if(!this.gameInPlay) {
-            throw new Error('GameHistory has ended.');
+            throw new Error('Game has ended.');
         }
 
         if(!this.timer.gameHasStarted()) {
@@ -43,17 +43,11 @@ export class Game {
     }
 
     getResults(): GameResults {
-        // throw new Error(this.timer.getTime());
-
         return new GameResults(this.keys, this.timer.getTime() / 1000);
     }
 
     isFinished(): boolean {
         return this.timer.gameHasStarted() && this.currentPointer === this.textToType.length;
-    }
-
-    gameHasStarted(): boolean {
-        return this.timer.gameHasStarted();
     }
 
     private shouldEndGame() {
