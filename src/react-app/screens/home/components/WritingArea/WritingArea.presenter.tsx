@@ -1,8 +1,8 @@
 import React from 'react';
-import {Game, GameTimer, Key, TypedKey} from "../../../../../typist/game";
-import {KeyStroke} from "../../../../../GameHistoryService/GameHistoryService";
+import {Game, Key, TypedKey} from "../../../../../typist/game";
 import {GameWithHistory, WritingAreaPresenterState, WritingAreaProps} from "../GameWithHistory/GameWithHistory";
 import {Replay} from "../Replay/Replay";
+import {GameTimer} from "../../../../../typist/gameTimer";
 
 export class WritingAreaPresenter extends React.Component<WritingAreaProps, WritingAreaPresenterState> {
     constructor(props: WritingAreaProps) {
@@ -42,10 +42,6 @@ export class WritingAreaPresenter extends React.Component<WritingAreaProps, Writ
                 <span>{`Game is finished. ${this.state.game.getResults().toString()}`}</span>
                 <div>Your game as it was:</div>
                 <Replay text={this.props.textToWrite} strokes={this.state.game.getHistoryStrokes()}/>
-                {/*{this.state.game.getHistoryStrokes().map((stroke: KeyStroke, i) => {*/}
-                    {/*const value = stroke.value === ' ' ? 'space' : stroke.value;*/}
-                    {/*return <div key={stroke.value + i}>{value}</div>;*/}
-                {/*})}*/}
               </div>;
         }
         return <div>

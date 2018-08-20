@@ -1,9 +1,10 @@
 import * as React from 'react';
 import {GameWithHistory} from "../GameWithHistory/GameWithHistory";
-import {GameTimer, Key} from "../../../../../typist/game";
+import {Key} from "../../../../../typist/game";
 import {PressedKey} from "../../../../../GameHistoryService/GameHistoryService";
 import {mount} from "enzyme";
 import {Replay} from "./Replay";
+import {GameTimer} from "../../../../../typist/gameTimer";
 
 describe('Replay', () => {
     it('should play the keys in order', (done) => {

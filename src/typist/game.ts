@@ -1,3 +1,6 @@
+import {GameResults} from "./gameResults";
+import {GameTimer} from "./gameTimer";
+
 export class Game {
     private keys: TypedKey[] = [];
     private textToType: string;
@@ -60,54 +63,11 @@ export class Game {
     }
 }
 
-export class GameResults {
-    constructor(private typedKeys: TypedKey[], public seconds: number) {}
-    public keys(): TypedKey[] {
-        return this.typedKeys;
-    }
-
-    public keysPerMinute(): number {
-        return Math.floor(this.typedKeys.filter(key => key.correct).length / (this.seconds / 60))
-    }
-
-    public toString(): string {
-        const correctRate = this.typedKeys.filter((key: TypedKey) => key.correct).length
-                / this.typedKeys.length * 100;
-
-        return `You typed ${correctRate} % right. You typed ${this.keysPerMinute()} keys per minute`;
-    }
-}
-
 export class Key {
     constructor(public key: string) {}
 
     isDelete(): boolean {
         return this.key === 'delete';
-    }
-}
-
-export class GameTimer {
-    public milliseconds: number = 0;
-    private interValId: any;
-
-    private tickSeconds() {
-        this.milliseconds += 10;
-    }
-
-    public start(): void {
-        this.interValId = setInterval(this.tickSeconds.bind(this), 10);
-    }
-
-    public getTime() {
-        return this.milliseconds;
-    }
-
-    public gameHasStarted() {
-        return !!this.interValId;
-    }
-
-    public stop() {
-        clearInterval(this.interValId);
     }
 }
 
