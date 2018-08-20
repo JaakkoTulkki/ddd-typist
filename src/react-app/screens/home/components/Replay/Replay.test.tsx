@@ -31,7 +31,7 @@ describe('Replay', () => {
         expect(gameWithHistory.isFinished()).toBeTruthy();
         let strokes = gameWithHistory.getHistoryStrokes();
         strokes = strokes.map((stroke: PressedKey, i) => {
-            const s = {...stroke, time: i * 10} as PressedKey;
+            const s = {...stroke, time: i * 20} as PressedKey;
             return s;
         });
 
@@ -40,6 +40,6 @@ describe('Replay', () => {
         setTimeout(() => {
             expect(component.find('[data-test-id="written-so-far"]').text()).toEqual('hel');
             done();
-        }, 41)
+        }, 83)
     });
 });

@@ -1,6 +1,6 @@
 import {Game, Key, GameTimer, TypedKey, GameResults} from "./game";
 
-describe('GameHistory', () => {
+describe('Game', () => {
     let game: Game;
     beforeEach(() => {
         game = new Game(new GameTimer());
