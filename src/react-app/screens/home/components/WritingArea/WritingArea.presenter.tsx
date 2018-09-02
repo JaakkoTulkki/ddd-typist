@@ -3,6 +3,8 @@ import {Game, Key, TypedKey} from "../../../../../typist/game";
 import {GameWithHistory, WritingAreaPresenterState, WritingAreaProps} from "../GameWithHistory/GameWithHistory";
 import {Replay} from "../Replay/Replay";
 import {GameTimer} from "../../../../../typist/gameTimer";
+import {appStyles} from "../../home";
+
 
 export class WritingAreaPresenter extends React.Component<WritingAreaProps, WritingAreaPresenterState> {
     constructor(props: WritingAreaProps) {
@@ -45,8 +47,8 @@ export class WritingAreaPresenter extends React.Component<WritingAreaProps, Writ
               </div>;
         }
         return <div>
-            <span data-test-id="written-so-far" style={{color: 'black'}}><WrittenSoFar game={this.state.game}/></span>
-            <span style={{color: 'gainsboro'}}>{this.props.textToWrite.slice(charAt)}</span>
+            <span data-test-id="written-so-far"><WrittenSoFar game={this.state.game}/></span>
+            <span className={appStyles.textToWrite}>{this.props.textToWrite.slice(charAt)}</span>
         </div>;
     }
 }

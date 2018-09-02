@@ -1,4 +1,14 @@
 @import "~bootstrap/scss/bootstrap";
+
+$teal-color: #E3BBA6;
+$black-color: #15181F;
+
 body {
   font-family: monospace;
+  background-color: $teal-color;
+  color: $black-color;
+}
+
+.text-to-write {
+  color: #BB8768;
 }

@@ -1288,3 +1288,4 @@ export const textWhite50: string;
 export const textHide: string;
 export const visible: string;
 export const invisible: string;
+export const textToWrite: string;

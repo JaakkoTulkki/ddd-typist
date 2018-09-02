@@ -1,5 +1,6 @@
-import {Game, GameTimer, Key} from "../../../../../typist/game";
+import {Game, Key} from "../../../../../typist/game";
 import {GameHistoryService, KeyStroke} from "../../../../../GameHistoryService/GameHistoryService";
+import {GameTimer} from "../../../../../typist/gameTimer";
 
 export interface WritingAreaProps {
     newKey: string;
