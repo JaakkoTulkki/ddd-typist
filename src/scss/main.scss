@@ -4,11 +4,32 @@ $teal-color: #E3BBA6;
 $black-color: #15181F;
 
 body {
+  background-color: #c2dde4;
+  color: #7697a0;
   font-family: monospace;
-  background-color: $teal-color;
-  color: $black-color;
 }
 
-.text-to-write {
-  color: #BB8768;
+.header {
+  height:   150px;
 }
+.lead-style {
+  font-family: Helvetica;
+  font-weight: 300;
+  font-size: 0.8rem;
+}
+
+.writing-area {
+  font-family: monospace;
+  margin-top: 5rem;
+}
+.text-to-write {
+  color: #7697a0;
+}
+.text-to-write__correct {
+  color: #35606d;
+}
+.text-to-write__incorrect {
+  color: red;
+}
+
+

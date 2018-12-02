@@ -60,11 +60,9 @@ interface WrittenSoFarProps {
 const WrittenSoFar: React.SFC<WrittenSoFarProps> = ({game}) => {
     return <span>
         {game.getResults().keys().map((key: TypedKey, index) => {
-            const style = {
-                color: key.correct ? 'black' : 'red',
-            } as any;
+            const clsName=  key.correct ? appStyles.textToWriteCorrect : appStyles.textToWriteIncorrect;
 
-            return <span style={style} key={index}>{key.key}</span>
+            return <span className={clsName} key={index}>{key.key}</span>
         })}
     </span>
 };
