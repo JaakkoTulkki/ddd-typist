@@ -1288,7 +1288,6 @@ export const textWhite50: string;
 export const textHide: string;
 export const visible: string;
 export const invisible: string;
-export const header: string;
 export const leadStyle: string;
 export const writingArea: string;
 export const textToWrite: string;

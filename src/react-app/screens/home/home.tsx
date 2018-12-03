@@ -2,24 +2,49 @@ import React from 'react';
 import {WritingAreaContainer} from "./components/WritingArea/WritingArea.container";
 import styles from '../../../scss/main.scss';
 
+export interface TextToType {
+    name: string;
+    text: string;
+}
+
 interface HomeProps {
-    textToWrite: string;
+    texts: TextToType[];
 }
 
 interface HomeState {
-    chosenText: string | null;
-    texts: string[];
+    chosenText: TextToType | null;
+    texts: TextToType[];
 }
 
 export class Home extends React.Component<HomeProps, HomeState> {
-    state: HomeState = {
-        chosenText: null,
-        texts: ['123']
-    };
+    constructor(props: HomeProps) {
+        super(props);
+        this.state = {
+            chosenText: null,
+            texts: props.texts
+        };
+    }
+
     render() {
         return <div>
-            {}
-            <WritingAreaContainer textToWrite={this.props.textToWrite}/>
+            {!this.state.chosenText &&
+            <div>
+                <h3>Choose Text To Write</h3>
+                <ul data-test-id="choose-text" className=
+                    {`${appStyles.listGroup} ${appStyles.listGroupFlush}`}
+                >
+                    {this.state.texts.map(text =>
+                        <li className={`${appStyles.listGroupItem}`}
+                            onClick={() => this.setState({chosenText: text})} key={text.name}
+                        >
+                            {text.name}
+                        </li>)}
+                </ul>
+            </div>
+            }
+            {this.state.chosenText &&
+                <WritingAreaContainer textToWrite={this.state.chosenText}/>
+            }
         </div>;
     }
 }

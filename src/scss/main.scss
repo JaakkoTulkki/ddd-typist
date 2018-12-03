@@ -1,17 +1,18 @@
 @import "~bootstrap/scss/bootstrap";
 
 $teal-color: #E3BBA6;
-$black-color: #15181F;
+$bg-color: #c2dde4;
 
 body {
-  background-color: #c2dde4;
+  background-color: $bg-color;
   color: #7697a0;
   font-family: monospace;
 }
 
-.header {
-  height:   150px;
+.list-group-item {
+  background-color: $bg-color;
 }
+
 .lead-style {
   font-family: Helvetica;
   font-weight: 300;
@@ -20,7 +21,7 @@ body {
 
 .writing-area {
   font-family: monospace;
-  margin-top: 5rem;
+  margin-top: 2rem;
 }
 .text-to-write {
   color: #7697a0;

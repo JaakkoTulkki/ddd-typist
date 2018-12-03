@@ -1,8 +1,9 @@
 import React from 'react';
 import {WritingAreaPresenter} from "./WritingArea.presenter";
+import {TextToType} from "../../home";
 
 interface WritingAreaContainerProps {
-    textToWrite: string;
+    textToWrite: TextToType;
     onKeyPress?: (event: KeyboardEvent) => void
 }
 
@@ -43,7 +44,8 @@ export class WritingAreaContainer extends React.Component<WritingAreaContainerPr
 
     render() {
         return <div>
-            <WritingAreaPresenter newKey={this.state.newKey} textToWrite={this.props.textToWrite} />
+            <h2 data-test-id="chosen-text">{this.props.textToWrite.name}</h2>
+            <WritingAreaPresenter newKey={this.state.newKey} textToWrite={this.props.textToWrite.text} />
         </div>;
     }
 }

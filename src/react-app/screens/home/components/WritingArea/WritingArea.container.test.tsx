@@ -7,8 +7,9 @@ const globalAny:any = global;
 
 
 describe('WritingAreaContainer', () => {
+    const textToWrite = {name: 'title', text: 'hello'};
     it('should pass pressed keys to container', () => {
-        const component: ShallowWrapper = shallow(<WritingAreaContainer textToWrite='hello'/>);
+        const component: ShallowWrapper = shallow(<WritingAreaContainer textToWrite={textToWrite} />);
         const expectedProps: WritingAreaProps = {
             newKey: 'h',
             textToWrite: 'hello'
@@ -25,7 +26,7 @@ describe('WritingAreaContainer', () => {
 
         const onKeyPress = jest.fn();
         const component: ReactWrapper =
-            mount(<WritingAreaContainer textToWrite='hello' onKeyPress={onKeyPress} />);
+            mount(<WritingAreaContainer textToWrite={textToWrite} onKeyPress={onKeyPress} />);
 
         expect(addListener).toHaveBeenCalledWith('keydown', onKeyPress, false);
         component.unmount();
