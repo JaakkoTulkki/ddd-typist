@@ -6,9 +6,19 @@ interface HomeProps {
     textToWrite: string;
 }
 
-export class Home extends React.Component<HomeProps, any> {
+interface HomeState {
+    chosenText: string | null;
+    texts: string[];
+}
+
+export class Home extends React.Component<HomeProps, HomeState> {
+    state: HomeState = {
+        chosenText: null,
+        texts: ['123']
+    };
     render() {
         return <div>
+            {}
             <WritingAreaContainer textToWrite={this.props.textToWrite}/>
         </div>;
     }
