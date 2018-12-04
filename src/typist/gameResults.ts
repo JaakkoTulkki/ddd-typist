@@ -11,8 +11,8 @@ export class GameResults {
     }
 
     public toString(): string {
-        const correctRate = this.typedKeys.filter((key: TypedKey) => key.correct).length
-                / this.typedKeys.length * 100;
+        const correctRate = (this.typedKeys.filter((key: TypedKey) => key.correct).length
+                / this.typedKeys.length * 100).toFixed(2);
 
         return `You typed ${correctRate} % right. You typed ${this.keysPerMinute()} keys per minute`;
     }

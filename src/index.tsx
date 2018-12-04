@@ -3,9 +3,8 @@ import ReactDOM from "react-dom";
 
 import * as styles from './scss/main.scss'
 import {Home, TextToType} from "./react-app/screens/home/home";
-const stories = require('./texts.json');
+const texts: TextToType[] = require('./texts.json');
 
-const texts: TextToType[] = stories;
 
 const App = () =>
     <div className={styles.containerFluid}>
