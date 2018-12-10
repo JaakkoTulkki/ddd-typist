@@ -7,10 +7,6 @@ export interface WritingAreaProps {
     textToWrite: string;
 }
 
-export interface WritingAreaPresenterState {
-    game: GameWithHistory;
-}
-
 export class GameWithHistory extends Game{
     private historyService: GameHistoryService;
     private gameHistoryId: string;

@@ -50,14 +50,14 @@ export class Game {
     }
 
     isFinished(): boolean {
-        return this.timer.gameHasStarted() && this.currentPointer === this.textToType.length;
+        return (this.timer.gameHasStarted() && this.currentPointer === this.textToType.length) || !this.gameInPlay
     }
 
     private shouldEndGame() {
         return this.currentPointer === this.textToType.length;
     }
 
-    private endGame() {
+    public endGame() {
         this.gameInPlay = false;
         this.timer.stop();
     }

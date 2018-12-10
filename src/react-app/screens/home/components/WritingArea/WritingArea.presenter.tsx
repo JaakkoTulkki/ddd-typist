@@ -1,10 +1,13 @@
 import React from 'react';
 import {Game, Key, TypedKey} from "../../../../../typist/game";
-import {GameWithHistory, WritingAreaPresenterState, WritingAreaProps} from "../GameWithHistory/GameWithHistory";
+import {GameWithHistory, WritingAreaProps} from "../GameWithHistory/GameWithHistory";
 import {Replay} from "../Replay/Replay";
 import {GameTimer} from "../../../../../typist/gameTimer";
 import {appStyles} from "../../home";
 
+interface WritingAreaPresenterState {
+    game: GameWithHistory;
+}
 
 export class WritingAreaPresenter extends React.Component<WritingAreaProps, WritingAreaPresenterState> {
     constructor(props: WritingAreaProps) {
