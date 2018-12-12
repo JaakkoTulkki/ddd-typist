@@ -11,8 +11,10 @@ export class GameWithHistory extends Game{
     private historyService: GameHistoryService;
     private gameHistoryId: string;
 
-    constructor(gameTimer: GameTimer) {
-        super(gameTimer);
+    constructor(gameTimer: GameTimer,
+                gameLengthMs: number=10000,
+                onGameEndCb: () => void = () => null) {
+        super(gameTimer, gameLengthMs, onGameEndCb);
         this.historyService = new GameHistoryService();
         this.gameHistoryId = this.historyService.createGame();
     }

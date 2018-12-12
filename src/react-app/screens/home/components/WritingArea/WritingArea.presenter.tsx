@@ -7,15 +7,23 @@ import {appStyles} from "../../home";
 
 interface WritingAreaPresenterState {
     game: GameWithHistory;
+    gameEnd: boolean;
 }
 
 export class WritingAreaPresenter extends React.Component<WritingAreaProps, WritingAreaPresenterState> {
     constructor(props: WritingAreaProps) {
         super(props);
+        this.endGameCb = this.endGameCb.bind(this);
         this.state = {
-            game: new GameWithHistory(new GameTimer()),
+            game: new GameWithHistory(new GameTimer(), 5000, this.endGameCb),
+            gameEnd: false
         };
+
         this.state.game.addText(this.props.textToWrite);
+    }
+
+    private endGameCb () {
+        this.setState({gameEnd: true});
     }
 
     private sendKeys() {
@@ -42,7 +50,7 @@ export class WritingAreaPresenter extends React.Component<WritingAreaProps, Writ
     render() {
         this.sendKeys();
         const charAt = this.state.game.getResults().keys().length;
-        if(this.state.game.isFinished()) {
+        if(this.state.gameEnd) {
             return <div>
                 <span>{`Game is finished. ${this.state.game.getResults().toString()}`}</span>
                 <div>Your game as it was:</div>
