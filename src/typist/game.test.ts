@@ -4,8 +4,10 @@ import {GameTimer} from "./gameTimer";
 
 describe('Game', () => {
     let game: Game;
+    let gameLength = 20;
+    const onGameEndCb = jest.fn();
     beforeEach(() => {
-        game = new Game(new GameTimer());
+        game = new Game(new GameTimer(), gameLength, onGameEndCb);
     });
 
     function addStrokesToGame(strokes: string) {
@@ -90,12 +92,29 @@ describe('Game', () => {
         expect(game.isFinished()).toBeTruthy();
     });
 
-    it('should not stop the game if it is not yet over', () => {
+    it('should call the onEndGame cb when game is finished', () => {
+        addTextToGame('hello there');
+        addStrokesToGame('hello there');
+        expect(game.isFinished()).toEqual(true);
+        expect(onGameEndCb).toHaveBeenCalled();
+    });
+
+    it('should not stop the game if it not all chars have been added and time is not up', () => {
         addTextToGame('hello');
         addStrokesToGame('hell');
 
         expect(game.isFinished()).toEqual(false);
     });
+
+    it('should stop the game when time is up regardless of how many chars have been added', async (done) => {
+        addTextToGame('hello');
+        addStrokesToGame('hell');
+        setTimeout(() => {
+            expect(game.isFinished()).toEqual(true);
+            done();
+        }, gameLength + 5);
+    });
+
 
     it('should stop the timer once the game has stopped', () => {
         addTextToGame('hello');

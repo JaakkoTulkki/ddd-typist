@@ -7,7 +7,12 @@ export class Game {
     private currentPointer: number = 0;
     private gameInPlay: boolean = true;
 
-    constructor(protected timer: GameTimer){ }
+    constructor(protected timer: GameTimer,
+                protected gameLengthMs: number=5000,
+                protected onGameEnd: () => void = () => null){
+        timer.setGameLength(gameLengthMs);
+        timer.onGameEnd(this.endGame.bind(this));
+    }
 
     public sendKey(key: Key): void {
         if(!this.textToType) {
@@ -50,7 +55,8 @@ export class Game {
     }
 
     isFinished(): boolean {
-        return (this.timer.gameHasStarted() && this.currentPointer === this.textToType.length) || !this.gameInPlay
+        return (this.timer.gameHasStarted() && this.timer.gameHasEnded()
+            && this.currentPointer === this.textToType.length) || !this.gameInPlay
     }
 
     private shouldEndGame() {
@@ -60,6 +66,7 @@ export class Game {
     public endGame() {
         this.gameInPlay = false;
         this.timer.stop();
+        this.onGameEnd();
     }
 }
 
