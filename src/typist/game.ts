@@ -6,6 +6,7 @@ export class Game {
     private textToType: string;
     private currentPointer: number = 0;
     private gameInPlay: boolean = true;
+    private gameTouched: boolean = false;
 
     constructor(protected timer: GameTimer,
                 protected gameLengthMs: number=5000,
@@ -33,6 +34,7 @@ export class Game {
         this.currentPointer += 1;
 
         this.keys.push(new TypedKey(key.key, correct));
+        this.gameTouched = true;
 
         if(this.shouldEndGame()) {
             this.endGame();
@@ -57,6 +59,10 @@ export class Game {
     isFinished(): boolean {
         return (this.timer.gameHasStarted() && this.timer.gameHasEnded()
             && this.currentPointer === this.textToType.length) || !this.gameInPlay
+    }
+
+    public gameIsOn(): boolean {
+        return this.gameInPlay && this.gameTouched;
     }
 
     private shouldEndGame() {
