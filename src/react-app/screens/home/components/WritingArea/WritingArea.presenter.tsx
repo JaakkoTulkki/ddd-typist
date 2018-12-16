@@ -114,7 +114,7 @@ export class WritingAreaPresenter extends React.Component<WritingAreaProps, Writ
         if(this.state.gameEnd) {
             return <div>
                 <Timer start={false} />
-                <span>{`Game is finished. ${this.state.game.getResults().toString()}`}</span>
+                <span>{`${this.state.game.getResults().toString()}`}</span>
                 <div>Your game as it was:</div>
                 <Replay text={this.props.textToWrite} strokes={this.state.game.getHistoryStrokes()}/>
               </div>;
