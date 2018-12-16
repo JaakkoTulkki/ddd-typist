@@ -41,15 +41,15 @@ describe('HistoryRepository', () => {
         const gameId = '1';
         historyRepo.save(getGameHistory(gameId));
         // Simulate that key strokes have not arrived in order
-        historyRepo.addStrokeToGame(gameId, 2, 'c');
-        historyRepo.addStrokeToGame(gameId, 1, 'b');
-        historyRepo.addStrokeToGame(gameId, 0.1, 'a');
+        historyRepo.addStrokeToGame(gameId, 2, 'c', true);
+        historyRepo.addStrokeToGame(gameId, 1, 'b', true);
+        historyRepo.addStrokeToGame(gameId, 0.1, 'a', false);
 
         const game = historyRepo.findById(gameId);
         expect(game.strokes).toEqual([
-            {time: 0.1, value: 'a'},
-            {time: 1, value: 'b'},
-            {time: 2, value: 'c'},
+            {time: 0.1, value: 'a', correct: false},
+            {time: 1, value: 'b', correct: true},
+            {time: 2, value: 'c', correct: true},
         ])
     });
 });

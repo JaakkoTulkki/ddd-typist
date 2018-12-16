@@ -4,6 +4,7 @@ import {HistoryRepo} from "./GameHistoryRepository";
 export interface PressedKey {
     time: number;
     value: string;
+    correct: boolean;
 }
 
 export class GameHistory {
@@ -23,8 +24,8 @@ export class GameHistory {
         return this._strokes;
     }
 
-    public addStroke(time: number, value: string) {
-        this._strokes.push({time, value} as PressedKey)
+    public addStroke(time: number, value: string, correct: boolean) {
+        this._strokes.push({time, value, correct} as PressedKey)
     }
 }
 
@@ -35,13 +36,14 @@ export interface GameHistoryRepository {
 
     findById(gameId: string): GameHistory;
 
-    addStrokeToGame(gameId: string, time: number, value: string): void;
+    addStrokeToGame(gameId: string, time: number, value: string, correct: boolean): void;
 }
 
 export interface KeyStroke {
     time: number;
     value: string;
     gameId: string;
+    correct: boolean;
 }
 
 export class GameHistoryService {
@@ -64,6 +66,7 @@ export class GameHistoryService {
             keyStroke.gameId,
             keyStroke.time,
             keyStroke.value,
+            keyStroke.correct,
         );
     }
 }

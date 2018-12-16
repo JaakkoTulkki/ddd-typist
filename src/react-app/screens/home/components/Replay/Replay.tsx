@@ -1,8 +1,10 @@
 import * as React from "react";
-import {PressedKey} from "../../../../../GameHistoryService/GameHistoryService";
+import {KeyStroke, PressedKey} from "../../../../../GameHistoryService/GameHistoryService";
+import {appStyles} from "../../home";
 
 interface ReplayState {
     writtenSoFar: string;
+    written: PressedKey[];
 }
 
 export interface ReplayProps {
@@ -14,19 +16,20 @@ export class Replay  extends React.Component <ReplayProps, ReplayState>{
     constructor(props: ReplayProps) {
         super(props);
         this.state = {
-            writtenSoFar: ''
+            writtenSoFar: '',
+            written: [],
         };
         for(const stroke of this.props.strokes) {
             setTimeout(() => {
                 this.setState((state, props) => {
-                    let newValue = state.writtenSoFar;
+                    let written = state.written;
                     if(stroke.value === 'delete') {
-                        newValue = newValue.slice(0, newValue.length -1);
+                        written = written.slice(0, written.length -1);
                     } else {
-                        newValue += stroke.value;
+                        written.push(stroke);
                     }
                     return {
-                        writtenSoFar: newValue,
+                        written,
                     }
                 });
             }, stroke.time)
@@ -35,7 +38,10 @@ export class Replay  extends React.Component <ReplayProps, ReplayState>{
 
     render() {
         return <div data-test-id="written-so-far">
-            {this.state.writtenSoFar}
+            {this.state.written.map((key: KeyStroke, index) => {
+                const clsName = key.correct ? appStyles.textToWriteCorrect : appStyles.textToWriteIncorrect;
+                return <span className={clsName} key={`written-${index}`}>{key.value}</span>
+            })}
         </div>
     }
 }

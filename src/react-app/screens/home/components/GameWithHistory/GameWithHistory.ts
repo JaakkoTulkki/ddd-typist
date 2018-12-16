@@ -24,23 +24,23 @@ export class GameWithHistory extends Game{
     }
 
     sendKey(key: Key) {
-        super.sendKey(key);
-
-        const keyStroke = this.createKeyStroke(key.key);
+        const keyStroke = this.createKeyStroke(key);
         this.historyService.saveKeyStroke(keyStroke);
+        super.sendKey(key);
     }
 
-    private createKeyStroke(value: string) {
+    private createKeyStroke(key: Key) {
         return {
             time: this.timer.getTime(),
-            value,
+            value: key.key,
+            correct: this.keyIsCorrect(key),
             gameId: this.gameHistoryId,
         } as KeyStroke;
     }
 
     delete() {
         super.delete();
-        const keyStroke: KeyStroke = this.createKeyStroke('delete');
+        const keyStroke: KeyStroke = this.createKeyStroke(new Key('delete'));
         this.historyService.saveKeyStroke(keyStroke);
     }
 }

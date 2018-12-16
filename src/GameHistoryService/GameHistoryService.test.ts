@@ -4,7 +4,7 @@ describe('GameHistoryService', () => {
     let gameHistoryService: GameHistoryService;
     beforeAll(() => {
         gameHistoryService = new GameHistoryService();
-    })
+    });
     function createGameHistory(): string {
         return gameHistoryService.createGame();
     }
@@ -30,12 +30,14 @@ describe('GameHistoryService', () => {
             time: 0.0001,
             value: 'a',
             gameId: gameHistoryId,
+            correct: true,
         } as KeyStroke;
 
         const secondKeyStroke = {
             time: 0.1,
             value: 'b',
             gameId: gameHistoryId,
+            correct: false,
         } as KeyStroke;
 
         gameHistoryService.saveKeyStroke(secondKeyStroke);

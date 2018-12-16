@@ -62,14 +62,20 @@ export class WritingAreaPresenter extends React.Component<WritingAreaProps, Writ
     private gameLength: number;
     constructor(props: WritingAreaProps) {
         super(props);
-        this.endGameCb = this.endGameCb.bind(this);
         this.gameLength = 5000;
+        this.endGameCb = this.endGameCb.bind(this);
+        const game = new GameWithHistory(new GameTimer(), this.gameLength, () => console.log('game finished '));
+        game.addText(this.props.textToWrite);
         this.state = {
-            game: new GameWithHistory(new GameTimer(), this.gameLength, this.endGameCb),
+            game: game,
             gameEnd: false
         };
+    }
 
-        this.state.game.addText(this.props.textToWrite);
+    componentDidUpdate(prevProps: WritingAreaProps, prevState: WritingAreaPresenterState) {
+        if(prevState.game.isFinished() && !this.state.gameEnd) {
+            this.endGameCb();
+        }
     }
 
     private endGameCb () {
@@ -77,7 +83,7 @@ export class WritingAreaPresenter extends React.Component<WritingAreaProps, Writ
     }
 
     private sendKeys() {
-        if (this.props.newKey && !this.state.game.isFinished()) {
+        if (this.props.newKey && this.state.game && !this.state.game.isFinished()) {
             // No two spaces should follow each other
             const writtenIndex = this.state.game.getResults().keys().length - 1;
             let lastKey = '';
@@ -100,6 +106,9 @@ export class WritingAreaPresenter extends React.Component<WritingAreaProps, Writ
     }
 
     render() {
+        if(!this.state.game) {
+            return <div>....</div>;
+        }
         this.sendKeys();
         const charAt = this.state.game.getResults().keys().length;
         if(this.state.gameEnd) {
@@ -115,6 +124,7 @@ export class WritingAreaPresenter extends React.Component<WritingAreaProps, Writ
             <span data-test-id="written-so-far"><WrittenSoFar game={this.state.game}/></span>
             <span className={appStyles.textToWrite}>{this.props.textToWrite.slice(charAt)}</span>
         </div>;
+
     }
 }
 
@@ -125,7 +135,7 @@ interface WrittenSoFarProps {
 const WrittenSoFar: React.SFC<WrittenSoFarProps> = ({game}) => {
     return <span>
         {game.getResults().keys().map((key: TypedKey, index) => {
-            const clsName=  key.correct ? appStyles.textToWriteCorrect : appStyles.textToWriteIncorrect;
+            const clsName = key.correct ? appStyles.textToWriteCorrect : appStyles.textToWriteIncorrect;
 
             return <span className={clsName} key={index}>{key.key}</span>
         })}

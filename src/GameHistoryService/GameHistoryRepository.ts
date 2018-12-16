@@ -25,8 +25,8 @@ export class HistoryRepo implements GameHistoryRepository {
         throw new Error('No such history');
     }
 
-    addStrokeToGame(gameId: string, time: number, value: string): void {
+    addStrokeToGame(gameId: string, time: number, value: string, correct: boolean): void {
         const game = this.findById(gameId);
-        game.addStroke(time, value);
+        game.addStroke(time, value, correct);
     }
 }

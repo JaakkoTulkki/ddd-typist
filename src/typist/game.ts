@@ -27,10 +27,7 @@ export class Game {
             this.timer.start();
         }
 
-        let correct = true;
-        if(this.textToType[this.currentPointer] !== key.key) {
-            correct = false;
-        }
+        let correct = this.keyIsCorrect(key);
         this.currentPointer += 1;
 
         this.keys.push(new TypedKey(key.key, correct));
@@ -39,6 +36,10 @@ export class Game {
         if(this.shouldEndGame()) {
             this.endGame();
         }
+    }
+
+    protected keyIsCorrect(key: Key) {
+        return this.textToType[this.currentPointer] === key.key;
     }
 
     public delete(): void {
@@ -56,7 +57,7 @@ export class Game {
         return new GameResults(this.keys, this.timer.getTime() / 1000);
     }
 
-    isFinished(): boolean {
+    public isFinished(): boolean {
         return (this.timer.gameHasStarted() && this.timer.gameHasEnded()
             && this.currentPointer === this.textToType.length) || !this.gameInPlay
     }
