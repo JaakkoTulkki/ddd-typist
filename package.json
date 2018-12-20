@@ -7,7 +7,7 @@
     "test": "jest",
     "adev": "webpack-serve",
     "dev": "webpack-dev-server --host 0.0.0.0",
-    "build": "webpack -p"
+    "build": "jest && webpack -p"
   },
   "author": "",
   "license": "ISC",

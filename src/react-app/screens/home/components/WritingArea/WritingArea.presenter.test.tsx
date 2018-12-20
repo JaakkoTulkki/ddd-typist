@@ -22,6 +22,6 @@ describe('WritingArea', () => {
         const component = mount(<WritingAreaPresenter textToWrite='he' newKey='' />);
         component.setProps({newKey: 'h'});
         component.setProps({newKey: 'e'});
-        expect(component.text()).toContain('Game is finished');
+        expect(component.text()).toContain('Your game as it was');
     });
 });

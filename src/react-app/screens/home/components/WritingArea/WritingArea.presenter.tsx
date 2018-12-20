@@ -62,9 +62,9 @@ export class WritingAreaPresenter extends React.Component<WritingAreaProps, Writ
     private gameLength: number;
     constructor(props: WritingAreaProps) {
         super(props);
-        this.gameLength = 5000;
+        this.gameLength = 10000;
         this.endGameCb = this.endGameCb.bind(this);
-        const game = new GameWithHistory(new GameTimer(), this.gameLength, () => console.log('game finished '));
+        const game = new GameWithHistory(new GameTimer(), this.gameLength, () => undefined);
         game.addText(this.props.textToWrite);
         this.state = {
             game: game,
