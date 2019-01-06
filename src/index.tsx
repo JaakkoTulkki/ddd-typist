@@ -11,8 +11,8 @@ const App = () =>
         <div className={`${styles.row}`}>
             <div className={styles.col2} />
             <div className={styles.col8}>
-                <h1>
-                    Typer
+                <h1 onClick={() => window.location.href = '/'}>
+                   Typer
                 </h1>
                 <p className={`${styles.leadStyle}`}>Just start typing!</p>
                 <hr/>
