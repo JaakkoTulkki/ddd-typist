@@ -14,8 +14,6 @@ const App = () =>
                 <h1 onClick={() => window.location.href = '/'}>
                    Typer
                 </h1>
-                <p className={`${styles.leadStyle}`}>Just start typing!</p>
-                <hr/>
                 <div className={`${styles.row} ${styles.writingArea}`}>
                     <Home texts={texts} />
                 </div>

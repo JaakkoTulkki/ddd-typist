@@ -6,7 +6,7 @@ import {GameTimer} from "../../../../../typist/gameTimer";
 import {appStyles} from "../../home";
 
 interface TimerProps {
-    start: boolean,
+    gameIsOn: boolean,
     gameLength?: number;
 }
 
@@ -26,16 +26,16 @@ class Timer extends React.Component<TimerProps, TimerState> {
     }
 
     public componentDidUpdate(prevProps: TimerProps) {
-        if(!prevProps.start && this.props.start) {
+        if(!prevProps.gameIsOn && this.props.gameIsOn) {
             this.intervalId = setInterval(() => {
                 const time = this.state.time + 10;
                 let timeToDisplay: any = (this.props.gameLength ? this.props.gameLength - time : 0) / 1000;
-                timeToDisplay = `${timeToDisplay}`;
+                timeToDisplay = `${Math.floor(timeToDisplay)}`;
                 this.setState({time, timeToDisplay});
             }, 10);
         }
 
-        if(prevProps.start && !this.props.start) {
+        if(prevProps.gameIsOn && !this.props.gameIsOn) {
             clearInterval(this.intervalId);
         }
     }
@@ -44,11 +44,11 @@ class Timer extends React.Component<TimerProps, TimerState> {
         if(this.state.time === 0) {
             return <div>Game length {this.state.timeToDisplay} seconds</div>
         }
-        if(!this.props.start) {
+        if(!this.props.gameIsOn) {
             return <div>Game finished</div>
         }
         return <div>Time left
-                <span style={{display: 'inline-block', width: '30px', marginLeft: '3px'}}> {this.state.timeToDisplay}</span> seconds</div>
+                <span style={{display: 'inline-block', width: '10px', marginLeft: '3px'}}> {this.state.timeToDisplay}</span> seconds</div>
     }
 }
 
@@ -60,9 +60,11 @@ interface WritingAreaPresenterState {
 
 export class WritingAreaPresenter extends React.Component<WritingAreaProps, WritingAreaPresenterState> {
     private gameLength: number;
+    private intervalId: any;
     constructor(props: WritingAreaProps) {
         super(props);
-        this.gameLength = 10000;
+        this.gameLength = 3000;
+        this.intervalId = null;
         this.endGameCb = this.endGameCb.bind(this);
         const game = new GameWithHistory(new GameTimer(), this.gameLength, () => undefined);
         game.addText(this.props.textToWrite);
@@ -73,9 +75,21 @@ export class WritingAreaPresenter extends React.Component<WritingAreaProps, Writ
     }
 
     componentDidUpdate(prevProps: WritingAreaProps, prevState: WritingAreaPresenterState) {
-        if(prevState.game.isFinished() && !this.state.gameEnd) {
+        if (prevState.game.isFinished() && !this.state.gameEnd) {
             this.endGameCb();
         }
+        if (this.state.game.gameIsOn()) {
+            this.intervalId = setInterval(() => {
+                if (this.state.game.isFinished()) {
+                    this.setState({gameEnd: true});
+                    clearInterval(this.intervalId);
+                }
+            }, 100)
+        }
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.intervalId);
     }
 
     private endGameCb () {
@@ -113,14 +127,14 @@ export class WritingAreaPresenter extends React.Component<WritingAreaProps, Writ
         const charAt = this.state.game.getResults().keys().length;
         if(this.state.gameEnd) {
             return <div>
-                <Timer start={false} />
+                <Timer gameIsOn={false} />
                 <span>{`${this.state.game.getResults().toString()}`}</span>
                 <div>Your game as it was:</div>
                 <Replay text={this.props.textToWrite} strokes={this.state.game.getHistoryStrokes()}/>
               </div>;
         }
         return <div>
-            <Timer start={this.state.game.gameIsOn()} gameLength={this.gameLength}/>
+            <Timer gameIsOn={this.state.game.gameIsOn()} gameLength={Math.floor(this.gameLength)}/>
             <span data-test-id="written-so-far"><WrittenSoFar game={this.state.game}/></span>
             <span className={appStyles.textToWrite}>{this.props.textToWrite.slice(charAt)}</span>
         </div>;
